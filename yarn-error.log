@@ -1,0 +1,36 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js init
+
+PATH: 
+  C:\Python312\Scripts\;C:\Python312\;C:\Program Files\Microsoft\jdk-11.0.18.10-hotspot\bin;C:\Python311\Scripts\;C:\Python311\;C:\Program Files\Zulu\zulu-17\bin\;C:\Python310\Scripts\;C:\Python310\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files (x86)\Lua\5.1;C:\Program Files (x86)\Lua\5.1\clibs;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\chocolatey\bin;C:\tools\python-x86_32;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin\;C:\Program Files\IVI Foundation\VISA\Win64\Bin\;C:\Program Files (x86)\National Instruments\Shared\LabVIEW CLI;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\MinGW\bin;C:\Program Files\CMake\bin;C:\Program Files\Go\bin;C:\vclib\SDL2-2.26.5\lib\x64;C:\vclib\SDL2_ttf-2.20.2\lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\OpenJDK\jdk-20.0.1\bin;Z:\Android\Sdk\platform-tools;C:\Program Files\nodejs\;C:\Users\BOKAYY\.cargo\bin;C:\Users\BOKAYY\AppData\Local\Programs\Python\Launcher\;C:\Users\BOKAYY\AppData\Local\Programs\Python\Python38\Scripts\;C:\Users\BOKAYY\AppData\Local\Programs\Python\Python38\;C:\Users\BOKAYY\AppData\Local\Microsoft\WindowsApps;C:\Users\BOKAYY\.dotnet\tools;C:\Users\BOKAYY\AppData\Local\Yarn\bin;C:\Program Files (x86)\DjVuLibre;C:\Users\BOKAYY\go\bin;C:\Users\BOKAYY\AppData\Local\spicetify;C:\tools\mysql\current\bin;;C:\Users\BOKAYY\AppData\Local\Programs\Hyper\resources\bin;C:\Users\BOKAYY\AppData\Local\Programs\oh-my-posh\bin;C:\Users\BOKAYY\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  21.1.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:137008:13)
+      at Interface.emit (node:events:515:28)
+      at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1125:18)
+      at ReadStream.onkeypress (node:internal/readline/interface:264:20)
+      at ReadStream.emit (node:events:515:28)
+      at emitKeys (node:internal/readline/utils:371:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+      at ReadStream.emit (node:events:515:28)
+      at addChunk (node:internal/streams/readable:545:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
