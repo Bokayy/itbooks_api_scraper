@@ -1,9 +1,5 @@
 //ES6 Module syntax 
-import https from 'node:https';
-
-let rawData = '';
-let humanReadable = ''; //just json
-
+import http from 'node:http';
 /* https.get('https://api.itbook.store/1.0/search/MongoDB', (res) => {
   res.on('data', (chunk) => {
     rawData += chunk;
@@ -16,45 +12,60 @@ let humanReadable = ''; //just json
   console.error(e);
 });  */
 
-const postData= {
-  title: 'test',
-  subtitle: 'test',
-  isbn13: 'test',
-  price: 'test',
-  image: 'test',
-  url: 'test',
-};
 
-const postOptions = {
-  hostname: 'localhost',
-  port: 8080,
-  path:'/insert',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': Buffer.byteLength(JSON.stringify(postData))
-  },
-};
+function makeHttpRequest(){
 
+  const postData= {
+    title: 'test',
+    subtitle: 'test',
+    isbn13: 'test',
+    price: 'test',
+    image: 'test',
+    url: 'test',
+  };
 
+  const postOptions = {
+    protocol: 'http:',
+    hostname: 'localhost',
+    port: 8080,
+    method: 'POST',
+    path:'/insert',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+      //'Authorization': 'Basic TOKEN'
+    },
+  };
 
-const postReq = https.request(postOptions, (res) => {
-  console.log('statusCode:', res.statusCode);
-  console.log('headers:', res.headers);
+  return new Promise((resolve, reject) => {
+    const req = http.request(postOptions, (res) => {
+      let body = '';
+      
+      res.on('data', (chunk)=>{
+            body+=chunk;
+          });
+  
+      res.on('end', () => {
+        console.log(body);
+        if (res.statusCode / 2 === 100 ) {
+            console.log('success')
+            resolve('Success');
+            }
+        else {
+            console.log('failed')
+            resolve('Failure');
+        }
+    });
 
-  res.on('data', (d)=>{
-    console.log(d);
-  });
+    res.on('error', () => {
+      console.log('error');
+      reject(Error('HTTP call failed'));
+    });
+    req.write(JSON.stringify(body));
+    req.end();
 });
+  })
+}
 
-postReq.on('error', (e) =>{
-  console.error(e);
-});
-
-postReq.write(postData);
-req.end();
-
-//todo šalji na backendov localhost:port kombo-
-//todo - na JSONtoDB funkciju.
-//solution - https post
+makeHttpRequest();
 
