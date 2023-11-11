@@ -32,29 +32,29 @@ return humanReadable;
 
 function makeHttpRequest(){
 
-  const postData= {
-    title: 'test',
-    subtitle: 'test',
-    isbn13: 'test',
-    price: 'test',
-    image: 'test',
-    url: 'test',
-  };
-
   const postOptions = {
-    protocol: 'http:',
-    hostname: 'localhost',
-    port: 2339,
-    method: 'POST',
-    path:'/insert',
-    headers: {
+    'protocol': 'http:',
+    'hostname': 'localhost',
+    'port': 2339,
+    'method': 'POST',
+    'path':'/insert',
+    'headers': {
       'Content-Type': 'application/json',
       //'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
       'Accept': '*',
-      'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
       //'Authorization': 'Basic TOKEN'
     },
   };
+
+  const postData= 
+  {
+  "title": "test",
+  "subtitle": "test",
+  "isbn13": "test",
+  "price": "test",
+  "image": "test",
+  "url": "test"
+};
 
   return new Promise((resolve, reject) => {
     const req = http.request(postOptions, (res) => {
@@ -77,11 +77,11 @@ function makeHttpRequest(){
       console.log('error');
       reject(Error('HTTP call failed'));
     });
-    req.write(JSON.stringify(body));
-    req.end();
+    console.log(body);
   });
+  //req.write(JSON.stringify(body));
+  req.end();
 });
-
 };
-makeHttpGetRequest();
-
+//makeHttpGetRequest();
+makeHttpRequest();
