@@ -4,23 +4,29 @@ import https from 'node:https'; //for getting data from api.itbooks.store
 import dotenv from 'dotenv';
 dotenv.config()
 
-function itbooksScrapeGetRequest(query) {
-  let rawData = '';
-  let humanReadable = '';
-  https.get(`https://api.itbook.store/1.0/search/${query}`, (res) => {
-  res.on('data', (chunk) => {
-    rawData += chunk;
-  });
-  res.on('end', () => {
-    humanReadable = JSON.parse(rawData);
-    console.log("humanReadable: ", humanReadable);
-  })
-}).on('error', (e) => {
-  console.error(e);
-});
-return humanReadable;
-}
+let url = `https://api.itbook.store/1.0/search/MongoDB`
 
+const alternativeGetRequest = url => new Promise((resolve,reject) =>{
+  https.get(url, res => {
+    let data = '';
+
+    res.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    res.on('end', ()=>{
+      resolve(JSON.parse(data)); //resolve is most likely a Promise specific kind of return
+    });
+
+    res.on('error', error => {
+      reject(error);
+    });
+  });
+});
+
+let baseResponse = await alternativeGetRequest(url);
+
+console.log("baseResponse: ", baseResponse);
 
 function sendPostRequest(){
 
@@ -77,4 +83,5 @@ function sendPostRequest(){
 };
 
 //sendPostRequest();
-console.log(itbooksScrapeGetRequest("MongoDB"));
+//console.log("test: ", await itbooksScrapeGetRequest("MongoDB"));
+
