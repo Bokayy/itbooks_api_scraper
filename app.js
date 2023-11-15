@@ -1,10 +1,28 @@
 //ES6 Module syntax 
 import http from 'node:http';
+import https from 'node:https'; //for getting data from api.itbooks.store
 import dotenv from 'dotenv';
 dotenv.config()
 
+function itbooksScrapeGetRequest(query) {
+  let rawData = '';
+  let humanReadable = '';
+  https.get(`https://api.itbook.store/1.0/search/${query}`, (res) => {
+  res.on('data', (chunk) => {
+    rawData += chunk;
+  });
+  res.on('end', () => {
+    humanReadable = JSON.parse(rawData);
+    console.log("humanReadable: ", humanReadable);
+  })
+}).on('error', (e) => {
+  console.error(e);
+});
+return humanReadable;
+}
 
-function makeHttpRequest(){
+
+function sendPostRequest(){
 
   const postOptions = {
     'protocol': 'http:',
@@ -20,7 +38,7 @@ function makeHttpRequest(){
     },
   };
 
-  const postData= 
+  const postBody= 
   {
   "title": "test",
   "subtitle": "test",
@@ -36,6 +54,7 @@ function makeHttpRequest(){
       res.on('data', (chunk)=>{
             body+=chunk;
           });
+
       res.on('end', () => {
         console.log(body);
         if (res.statusCode / 2 === 100 ) {
@@ -51,11 +70,11 @@ function makeHttpRequest(){
       console.log('error');
       reject(Error('HTTP call failed'));
     });
-    console.log(body);
   });
-  //req.write(JSON.stringify(body));
+  req.write(JSON.stringify(postBody)); //the part that actually sends the request
   req.end();
 });
 };
-//makeHttpGetRequest();
-makeHttpRequest();
+
+//sendPostRequest();
+console.log(itbooksScrapeGetRequest("MongoDB"));
