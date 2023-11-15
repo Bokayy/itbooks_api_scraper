@@ -1,33 +1,7 @@
 //ES6 Module syntax 
 import http from 'node:http';
-/* https.get('https://api.itbook.store/1.0/search/MongoDB', (res) => {
-  res.on('data', (chunk) => {
-    rawData += chunk;
-  });
-  res.on('end', () => {
-    humanReadable = JSON.parse(rawData);
-    console.log("line 20:\n", humanReadable);
-  })
-}).on('error', (e) => {
-  console.error(e);
-});  */
-
-function makeHttpGetRequest() {
-  let rawData = '';
-  let humanReadable = '';
-  http.get('http://localhost:2339/books', (res) => {
-  res.on('data', (chunk) => {
-    rawData += chunk;
-  });
-  res.on('end', () => {
-    humanReadable = JSON.parse(rawData);
-    console.log("humanReadable: ", humanReadable);
-  })
-}).on('error', (e) => {
-  console.error(e);
-});
-return humanReadable;
-}
+import dotenv from 'dotenv';
+dotenv.config()
 
 
 function makeHttpRequest(){
@@ -35,7 +9,7 @@ function makeHttpRequest(){
   const postOptions = {
     'protocol': 'http:',
     'hostname': 'localhost',
-    'port': 2339,
+    'port': process.env.PORT,
     'method': 'POST',
     'path':'/insert',
     'headers': {
@@ -65,7 +39,7 @@ function makeHttpRequest(){
       res.on('end', () => {
         console.log(body);
         if (res.statusCode / 2 === 100 ) {
-            console.log('success')
+            console.log('Scraper: success')
             resolve('Success');
             }
         else {
