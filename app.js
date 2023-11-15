@@ -1,8 +1,6 @@
 //ES6 Module syntax 
 import http from 'node:http';
 import https from 'node:https'; //for getting data from api.itbooks.store
-import dotenv from 'dotenv';
-dotenv.config()
 
 let url = `https://api.itbook.store/1.0/search/MongoDB`
 
@@ -24,9 +22,9 @@ const alternativeGetRequest = url => new Promise((resolve,reject) =>{
   });
 });
 
-let baseResponse = await alternativeGetRequest(url);
+let totalNumberOfBooks = (await alternativeGetRequest(url)).total;
 
-console.log("baseResponse: ", baseResponse);
+
 
 function sendPostRequest(){
 
@@ -82,6 +80,4 @@ function sendPostRequest(){
 });
 };
 
-//sendPostRequest();
-//console.log("test: ", await itbooksScrapeGetRequest("MongoDB"));
 
