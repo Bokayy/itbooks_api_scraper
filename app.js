@@ -54,7 +54,7 @@ for (let i = 1; i <= numberOfNecessaryRequests ; i++) {
   booksArray.push(...currentArray);
 }
 
-console.log(booksArray);
+//console.log(booksArray);
 
 function sendPostRequest(){
 
@@ -71,16 +71,6 @@ function sendPostRequest(){
       //'Authorization': 'Basic TOKEN'
     },
   };
-
-  const postBody= 
-  {
-  "title": "test",
-  "subtitle": "test",
-  "isbn13": "test",
-  "price": "test",
-  "image": "test",
-  "url": "test"
-};
 
   return new Promise((resolve, reject) => {
     const req = http.request(postOptions, (res) => {
@@ -106,7 +96,7 @@ function sendPostRequest(){
       reject(Error('HTTP call failed'));
     });
   });
-  req.write(JSON.stringify(postBody)); //the part that actually sends the request
+  req.write(JSON.stringify(booksArray)); //the part that actually sends the request
   req.end();
 });
 };
