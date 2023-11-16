@@ -39,14 +39,22 @@ const getNumberOfBooks = (url,page) => new Promise((resolve,reject) =>{
   });
 });
 
-//let totalNumberOfBooks = await getNumberOfBooks(url);
+let totalNumberOfBooks = await getNumberOfBooks(url);
 //console.log(totalNumberOfBooks);
 
-/* let numberOfNecessaryRequests = Math.ceil(totalNumberOfBooks / 10);
-console.log(numberOfNecessaryRequests); */
+let numberOfNecessaryRequests = Math.ceil(totalNumberOfBooks / 10);
+//console.log(numberOfNecessaryRequests);
 
-console.log(await getNumberOfBooks(url,2));
-//for (let i = 1; i <= numberOfNecessaryRequests ; i++) {}
+//console.log(await getNumberOfBooks(url,2));
+
+let booksArray = new Array();
+
+for (let i = 1; i <= numberOfNecessaryRequests ; i++) {
+  let currentArray = await getNumberOfBooks(url,i);
+  booksArray.push(...currentArray);
+}
+
+console.log(booksArray);
 
 function sendPostRequest(){
 
