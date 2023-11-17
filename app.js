@@ -39,19 +39,16 @@ const getNumberOfBooks = (url,page) => new Promise((resolve,reject) =>{
   });
 });
 
-let totalNumberOfBooks = await getNumberOfBooks(url);
-//console.log(totalNumberOfBooks);
-
-let numberOfNecessaryRequests = Math.ceil(totalNumberOfBooks / 10);
-//console.log(numberOfNecessaryRequests);
-
-//console.log(await getNumberOfBooks(url,2));
 
 let booksArray = new Array();
+async function populateBooks() {
+  let totalNumberOfBooks = await getNumberOfBooks(url);
+  let numberOfNecessaryRequests = Math.ceil(totalNumberOfBooks / 10);
 
-for (let i = 1; i <= numberOfNecessaryRequests ; i++) {
-  let currentArray = await getNumberOfBooks(url,i);
-  booksArray.push(...currentArray);
+  for (let i = 1; i <= numberOfNecessaryRequests ; i++) {
+    let responseArray = await getNumberOfBooks(url,i);
+    booksArray.push(...responseArray);
+  }
 }
 
 //console.log(booksArray);
@@ -72,10 +69,10 @@ function sendPostRequest(){
     },
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const req = http.request(postOptions, (res) => {
       let body = '';
-      res.on('data', (chunk)=>{
+      res.on('data', (chunk)=>{ //recieves the response
             body+=chunk;
           });
 
@@ -83,7 +80,7 @@ function sendPostRequest(){
         if (res.statusCode / 2 === 100 ) {
             console.log('Scraper: success');
             console.log(body);
-            resolve('Success');
+            resolve('Success'); //like return but for promises
             }
         else {
             console.log('failed')
@@ -96,10 +93,12 @@ function sendPostRequest(){
       reject(Error('HTTP call failed'));
     });
   });
+  await populateBooks();
   req.write(JSON.stringify(booksArray)); //the part that actually sends the request
   req.end();
 });
 };
 
-sendPostRequest();
+await sendPostRequest();
+
 
