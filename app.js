@@ -7,14 +7,17 @@ let url = `https://api.itbook.store/1.0/search/MongoDB`
 const getNumberOfBooks = (url,page) => new Promise((resolve,reject) =>{
   if (!page){ //just give me the number of books
     https.get(url, res => {
-      let data = '';
-
+      let getRequestData = '';
       res.on('data', (chunk) => {
-        data += chunk;
+        getRequestData += chunk;
       });
 
       res.on('end', ()=>{
-        resolve(JSON.parse(data).total); //resolve is most likely a Promise specific kind of return
+        console.log("data:", getRequestData);
+        if (getRequestData.length === 0){
+          reject(Error("data empty"));
+        }
+        resolve(JSON.parse(getRequestData).total); //resolve is most likely a Promise specific kind of return
       });
 
       res.on('error', error => {
@@ -22,21 +25,22 @@ const getNumberOfBooks = (url,page) => new Promise((resolve,reject) =>{
       });
     });
   }
-  https.get(`${url}/${page}`, res => {
-    let data = '';
+  else{
+    https.get(`${url}/${page}`, res => {
+      let getRequestData = '';
+        res.on('data', (chunk) => {
+          getRequestData += chunk;
+        });
 
-    res.on('data', (chunk) => {
-      data += chunk;
-    });
+        res.on('end', ()=>{
+          resolve(JSON.parse(getRequestData).books); //resolve is most likely a Promise specific kind of return
+        });
 
-    res.on('end', ()=>{
-      resolve(JSON.parse(data).books); //resolve is most likely a Promise specific kind of return
-    });
-
-    res.on('error', error => {
-      reject(error);
-    });
-  });
+        res.on('error', error => {
+          reject(error);
+        });
+      });
+    }
 });
 
 
@@ -94,6 +98,10 @@ function sendPostRequest(){
     });
   });
   await populateBooks();
+  console.log(booksArray);
+  if (booksArray.length === 0) {
+    reject(Error('books array empty'));
+  }
   req.write(JSON.stringify(booksArray)); //the part that actually sends the request
   req.end();
 });
