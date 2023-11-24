@@ -5,7 +5,7 @@ import https from 'node:https'; //for getting data from api.itbooks.store
 let url = `https://api.itbook.store/1.0/search/MongoDB`
 
 const getBooks = (url,page) => new Promise((resolve,reject) =>{
-  if (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!page){
+  if (!!page){
     url += `/${page}`;
   }
   https.get(url, res => {
@@ -41,7 +41,7 @@ async function populateBooks() {
   }
 }
 
-//console.log(booksArray);
+//console.log(booksArray);f
 
 function sendPostRequest(){
 
@@ -72,7 +72,7 @@ function sendPostRequest(){
             resolve('Success'); //like return but for promises
             }
         else {
-            console.log("failed: ", res.statusCode);
+            console.log(`failed:${res.statusCode}`, body );
             resolve('Failure');
         }
     });
